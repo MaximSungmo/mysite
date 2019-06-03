@@ -1,0 +1,83 @@
+@CHARSET "UTF-8";
+@import "mysite.css";
+
+#guestbook		{ margin:20px auto;	width:540px; }
+
+#guestbook h1	{
+	color: #464A4F;
+	margin-bottom: 10px;
+	padding-left: 40px;
+	background: url('/mysite3/assets/images/guestbook.png') 0 0 no-repeat;	
+	background-size: 35px;
+} 
+
+#guestbook form input,
+#guestbook form textarea {
+	display:block;
+	border: 1px solid #a9a9a9;
+	outline: none;
+	width: 540px;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+#guestbook form textarea {
+	height:80px;
+	resize: none;
+}
+
+#guestbook form input[type="submit"] {
+	width:552px;
+	font-weight:bold;
+	color:#846b5c;
+	background-color: #fff;
+	cursor: pointer;
+}
+
+#guestbook form input[type="submit"]:hover {
+	background-color: #65b791;
+	color: #fff;
+}
+
+#guestbook ul {
+	width:552px;
+	margin-top: 20px;
+	border-top:1px solid #a9a9a9;
+}
+
+#guestbook ul li {
+	position: relative;
+	width:100%;
+	margin-top:20px;
+	padding-left:50px;
+	background: url('/mysite3/assets/images/user.png') 0 5px no-repeat;	
+}
+
+#guestbook ul li strong,
+#guestbook ul li a {
+	display: block;
+}
+
+#guestbook ul li strong {
+	color:#777;
+}
+
+#guestbook ul li p {
+	width: 465px;
+	margin: 5px 0;
+	padding: 10px;
+	border: 1px solid #cacccc;
+	border-radius: 4px;
+	background-color: #eaeaea;
+}
+
+#guestbook ul li a {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	left:18px;
+	top:26px;
+	font-size: 0;
+	background: url('/mysite3/assets/images/delete.png') 0 0 no-repeat;
+}
+	
