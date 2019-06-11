@@ -8,12 +8,12 @@
 				<![CDATA[
 				insert
 				  into board
-				values ( null,
+				values ( nextval('seq_board'),
 						 #{title },
 						 #{contents },
 						 0,
 						 now(),
-						 ( select ifnull( max( group_no ), 0 ) + 1
+						 ( select coalesce( max( group_no ), 0 ) + 1
 						     from board a ),
 						 1, 
 						 0, 
@@ -24,7 +24,7 @@
 				<![CDATA[
 				insert
 				  into board
-				values ( null,
+				values ( nextval('seq_board'),
 						 #{title },
 						 #{contents },
 						 0,
@@ -44,7 +44,7 @@
 		   set title=#{title },
 		       contents=#{contents }
 		 where no=#{no }
-		   and user_no=#{userNo }		
+		   and member_no=#{userNo }		
 		]]>	
 	</update>
 	
@@ -53,7 +53,7 @@
 		delete
 		  from board 
 		 where no = #{no }
-		   and user_no = #{userNo }
+		   and member_no = #{userNo }
 		]]>	
 	</delete>
 
@@ -65,7 +65,7 @@
 				group_no as groupNo,
 				order_no as orderNo,
 				depth,
-				user_no as userNo
+				member_no as userNo
 		   from board
 		  where no = #{no }		
 		]]>		
@@ -78,7 +78,7 @@
 				contents
 		   from board
 		  where no = #{no }
-		    and user_no = #{userNo }		
+		    and member_no = #{userNo }		
 		]]>		
 	</select>	
 		
@@ -89,14 +89,15 @@
 				  select a.no,
 				  		 a.title,
 				  		 a.hit,
-				  		 date_format(a.reg_date, '%Y-%m-%d %p %h:%i:%s') as regDate,
+				  		 to_char(a.reg_date, 'YYYY-MM-DD HH24:MI:SS.MS') as regDate,
 				  		 a.depth,
 				  		 b.name as userName,
-				  		 a.user_no as userNo
-					from board a, user b
-				   where a.user_no = b.no
+				  		 a.member_no as userNo
+					from board a, member b
+				   where a.member_no = b.no
 				order by group_no desc, order_no asc
-				   limit #{startIndex }, #{size }				
+				   limit #{size }
+				  offset #{startIndex }  				
 				]]>
 			</when>
 			<otherwise>
@@ -104,15 +105,16 @@
 				  select a.no,
 				  		 a.title,
 				  		 a.hit,
-				  		 date_format(a.reg_date, '%Y-%m-%d %p %h:%i:%s') as regDate,
+				  		 to_char(a.reg_date, 'YYYY-MM-DD HH24:MI:SS.MS') as regDate,
 				  		 a.depth, 
 				  		 b.name as userName,
-				  		 a.user_no as userNo
-				  	from board a, user b
-				   where a.user_no = b.no
+				  		 a.member_no as userNo
+				  	from board a, member b
+				   where a.member_no = b.no
 				     and (title like '%${keyword }%' or contents like '%${keyword }%')
 				order by group_no desc, order_no asc
-				   limit #{startIndex }, #{size }				
+				   limit #{size }
+				  offset #{startIndex } 				
 				]]>			
 			</otherwise>
 		</choose>
