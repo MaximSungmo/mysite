@@ -5,12 +5,12 @@
 	<insert id="insert" parameterType="uservo">
 		<![CDATA[
 			insert 
-		      into user 
-		    values(null, #{name }, #{email }, #{password }, #{gender }, now())	
+		      into member 
+		    values(#{no }, #{name }, #{email }, #{password }, #{gender }, now())	
 		]]>
-		<selectKey keyProperty="no" resultType="long" order="AFTER">
+		<selectKey keyProperty="no" resultType="long" order="BEFORE">
 			<![CDATA[
-			select last_insert_id()
+			select nextval('seq_member')
 			]]>
 		</selectKey>
 	</insert>
@@ -18,7 +18,7 @@
 	<select id="getByNo" resultType="uservo" parameterType='long'>
 		<![CDATA[	 
 		select no, name, email, gender
-		  from user 
+		  from member 
 		 where no = #{value }
 		]]>
 	</select>

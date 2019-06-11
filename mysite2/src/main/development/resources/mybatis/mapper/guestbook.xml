@@ -3,7 +3,7 @@
 <mapper namespace="guestbook">
 	<select id="getList" resultType="guestbookvo">
 		<![CDATA[
-		select no, name, contents, date_format(reg_date, '%Y-%m-%d %h:%i:%s')
+		select no, name, contents, to_char(reg_date, 'yyyy-mm-dd')
 		  from guestbook
 		order by reg_date desc
 	 	]]>	
@@ -21,10 +21,10 @@
 		<![CDATA[
 		 insert 
 		   into guestbook 
-		 values( null, #{name }, #{password }, #{contents }, now() )
+		 values( nextval('seq_guestbook'), #{name }, #{password }, #{contents }, now() )
 		]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
-			select last_insert_id()
+			select currval('seq_guestbook')
 		</selectKey>
 	</insert>		
 
